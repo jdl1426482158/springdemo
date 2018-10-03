@@ -1,0 +1,131 @@
+w3c spring教程可以在spring5是同样使用
+	struts只能试用2.3，不能兼容2.5
+
+
+
+IoC容器
+	XmlBeanFactory()
+	ClassPathResource()
+	FileSystemXmlApplicationContext()
+	ClassPathXmlApplicationContext()
+	
+	
+
+
+常用标签用法
+
+	<bean id="..." class="...">
+       <property name="..." value="..."/>
+   </bean>
+   
+   <bean>属性
+   		lazy-init="true"					延迟初始化，即不是在创建容器的时候初始化，而是当第一次调用的时候初始化
+   		id									名字
+   		scope								作用域
+   			singleton						单例，即全局
+   			prototype						多例，即局部
+   											一下仅适用于WebApplicationContext环境
+   			request							响应，即单次访问
+   			session							会话，即本次浏览器
+   			global-session					
+   			
+   		继承接口或者xml配置属性来设置初始化/销毁方法
+   		org.springframework.beans.factory.InitializingBean
+   		init-method
+   		org.springframework.beans.factory.DisposableBean
+   		destroy-method
+   		或者在beans标签中定义默认方法
+   		default-init-method
+   		default-destroy-method
+   		abstract							true如果bean为模版，即被用来继承的
+   		parent								父bean的name
+   		
+   		子标签
+   			<constructor-arg>
+   				属性	
+   				ref							引用传入，即把后面的内容当成另一个bean的名字，通过容器获取bean对象传入
+   				type						传入参数的java类型，可省略
+   				value						值传入，即把后边的属性当成type属性的具体对象传入
+   				index						作为第几个构造方法的第几个参数传入
+   			<property>							
+   				name						用来指定对用的set方法名字
+   				ref
+   				value
+   				子标签
+   					<list>
+   						<value>
+   						<ref>
+   					<set>
+   						<value>
+   						<ref>
+   					<map>
+   						<entry key,value />
+   					<props>
+           				<prop key>
+    	autowire							自动注入bean
+    		可选值
+    		no								默认，不自动匹配，以下自动匹配和显示定义兼容
+    		byName							自动通过set方法名来匹配bean的id
+    		byType							自动通过set类型名来匹配bean的id
+    		constructor						自动通过检测构造函数的参数类型名来匹配bean的id
+    		autodetect						自动检测，Spring首先尝试通过 constructor 使用自动装配来连接，如果它不执行，Spring 尝试通过 byType 来自动装配。
+   		
+   		
+   		
+后置处理器,实现一些自定义逻辑回调方法,
+   	ApplicationContext 会自动检测由 BeanPostProcessor 接口的实现定义的 bean
+   	即只要定义<bean class="..."></bean>
+   	下面两个方法也是自动会被ApplicationContext自动识别
+   	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException
+   	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
+   	这是一个beans通用的
+   	
+   	
+注解配置，从 Spring 2.5 开始就可以使用注解来配置依赖注入,兼容显示定义配置
+	需要在bean配置文件中配置 <context:annotation-config/>标签
+	
+	@Required
+											指明对应的set必须在xml中配置
+	@Autowired
+											标记set方法，自动注入set方法byType
+											标记属性,省去set方法
+											标记构造方法，省去xml配置
+											
+		required							属性是否必须注入，默认true，相当于@Required
+		
+	@Qualifier("bean_id")
+											将@Autowired默认的byType注入改为通过指定bean来注入
+	
+	支持 JSR-250 的基础的注解
+	@Resource
+											通过指定bean名称来注入，如果没有指定则通过set后面的名字来搜索bean
+	@PostConstruct
+											初始化init-method的一个替代
+	@PreDestroy
+											销毁destroy-method的一个替代
+   			
+   			
+   			
+spring 事件处理
+	ApplicationListener
+	ApplicationEvent						由ConfigurableApplicationContext触发
+		ContextRefreshedEvent				refresh()
+		ContextStartedEvent					start()
+		ContextStoppedEvent					stop()
+		ContextClosedEvent					close()
+		RequestHandledEvent					web-specific 事件,告诉所有 bean HTTP 请求已经被服务
+											#Spring 的事件处理是单线程的,即事件处理完毕后在回到主程序
+											
+
+   			
+   			
+   			
+   			
+   			
+   			
+   			
+   			
+   			
+   			
+   			
+   			
