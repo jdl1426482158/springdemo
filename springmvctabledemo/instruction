@@ -1,0 +1,8 @@
+表单数据编辑简单demo
+
+注意 3版本于4,5版本差别很大啊，导的jar包是不一样的
+
+记住导入		jackson-core
+			jackson-databind
+			jackson-annotations
+			版本必须对上spring的版本
