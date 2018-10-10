@@ -1,0 +1,1 @@
+spring 配置文件默认为web.xml中的servlet的名字加-servlet.xml文件，位置在web-inf
