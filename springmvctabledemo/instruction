@@ -6,3 +6,7 @@
 			jackson-databind
 			jackson-annotations
 			版本必须对上spring的版本
+			
+记住利用框架创建bean的时候不会抛出具体异常的，像spring就只会跑出BeanCreationException唉
+
+所以必须要小心bean构造方法中的异常问题，
