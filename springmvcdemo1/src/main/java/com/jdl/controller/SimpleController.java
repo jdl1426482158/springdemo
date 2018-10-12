@@ -91,4 +91,10 @@ public class SimpleController {
 		System.out.println(empId);
 		return null;
 	}
+	
+	@RequestMapping("show")
+	public String show(Model model,@RequestParam(value="msg",required=true,defaultValue="helloworld" ) String msg) {
+		model.addAttribute("msg", msg);
+		return "show";
+	}
 }
